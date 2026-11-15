@@ -35,16 +35,14 @@ def apply_leave(employee_id, leave_type, from_date, to_date):
 
     if days <= balance:
         employees[employee_id][leave_type] = balance - days
-
         print(
             f"Leave approved: {days} days {leave_type} | "
-            f"Balance {leave_type}: "
-            f"{employees[employee_id][leave_type]}"
+            f"Balance {leave_type}: {employees[employee_id][leave_type]}"
         )
     else:
         print(
             f"Leave rejected. Requested: {days} days "
-            f"| Available: {balance}"
+            f"| Available: {balance} days"
         )
 
 
@@ -53,10 +51,8 @@ def view_balance(employee_id):
         print("Invalid employee ID.")
         return
 
-    print(f"Balance: {employee_id}")
-
-    for leave_type, balance in employees[employee_id].items():
-        print(f"{leave_type}: {balance}")
+    bal = employees[employee_id]
+    print(f"Casual: {bal['Casual']} | Sick: {bal['Sick']} | Earned: {bal['Earned']}")
 
 
 def main():
@@ -65,23 +61,18 @@ def main():
         print("2. View balance")
         print("3. Exit")
 
-        choice = input("Enter menu option: ")
+        choice = input("Enter menu option: ").strip()
 
         if choice == "1":
-            employee_id = input("Employee ID: ")
-            leave_type = input("Leave type (Casual/Sick/Earned): ")
-            from_date = input("From date (YYYY-MM-DD): ")
-            to_date = input("To date (YYYY-MM-DD): ")
+            employee_id = input("Employee ID: ").strip().upper()
+            leave_type = input("Leave type (Casual/Sick/Earned): ").strip().capitalize()
+            from_date = input("From date (YYYY-MM-DD): ").strip()
+            to_date = input("To date (YYYY-MM-DD): ").strip()
 
-            apply_leave(
-                employee_id,
-                leave_type,
-                from_date,
-                to_date
-            )
+            apply_leave(employee_id, leave_type, from_date, to_date)
 
         elif choice == "2":
-            employee_id = input("Employee ID: ")
+            employee_id = input("Employee ID: ").strip().upper()
             view_balance(employee_id)
 
         elif choice == "3":
